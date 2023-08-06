@@ -3,6 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorAccent"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
     <ListView
         android:id="@+id/listViewNewsHeadlines"
         android:layout_width="match_parent"
@@ -10,12 +23,29 @@
 
     <ProgressBar
         android:id="@+id/progressBarLoading"
-        android:layout_width="167dp"
-        android:layout_height="81dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="115dp"
-        android:layout_marginBottom="45dp"
-        android:visibility="invisible" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressBarLoading"
+        android:layout_centerHorizontal="true"
+        android:text="Submit"
+        android:textColorHighlight="#D51D1D"
+        android:textColorLink="#CD2B2B" />
+
+
+    <EditText
+        android:id="@+id/editTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter text here"
+        android:inputType="text" />
+
+
 
 </RelativeLayout>

@@ -27,7 +27,7 @@ public class NewsAdapter extends ArrayAdapter<NewsItem> {
 
         NewsItem newsItem = getItem(position);
 
-        // Bind the data to the views in the list item layout
+
         TextView textViewTitle = convertView.findViewById(R.id.textViewTitle);
         textViewTitle.setText(newsItem.getTitle());
 

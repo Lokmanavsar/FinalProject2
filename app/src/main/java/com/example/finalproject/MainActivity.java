@@ -1,10 +1,15 @@
 package com.example.finalproject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -23,10 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private ListView listViewNewsHeadlines;
     private ProgressBar progressBarLoading;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         listViewNewsHeadlines = findViewById(R.id.listViewNewsHeadlines);
         progressBarLoading = findViewById(R.id.progressBarLoading);
@@ -34,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
 
         FetchNewsTask fetchNewsTask = new FetchNewsTask();
         fetchNewsTask.execute();
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("BBC News");
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new MyFragment())
+                .commit();
+
     }
 
     private class FetchNewsTask extends AsyncTask<Void, Void, List<NewsItem>> {
@@ -46,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected List<NewsItem> doInBackground(Void... params) {
-            return fetchNewsData(); // Call the method to fetch news data
+            return fetchNewsData();
         }
+
         @Override
         protected void onPostExecute(List<NewsItem> newsItems) {
             super.onPostExecute(newsItems);
@@ -71,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayNewsHeadlines(List<NewsItem> newsItems) {
-        // ...
+
+
         listViewNewsHeadlines.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -145,9 +165,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return newsItems;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_help, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_help) {
+            showHelpDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private void showHelpDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Help")
+                .setMessage("Add your instructions here...")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle OK button click if needed
+                    }
+                })
+                .show();
+
 }
 }
-
-
-
-
